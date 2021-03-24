@@ -1,6 +1,6 @@
-// Assignment Code
+// Creates the button variable to be used in the click listener.
 var generateBtn = document.querySelector("#generate");
-// Character objects
+// Defining character objects. These objects contain all of the possible characters from which will choose our randomly generated password.
 const characterUpper = {
   1: 'A',
   2: 'B',
@@ -30,17 +30,112 @@ const characterUpper = {
   26: 'Z'
 }
 
+const characterLower = {
+  1: 'a',
+  2: 'b',
+  3: 'c',
+  4: 'd',
+  5: 'e',
+  6: 'f',
+  7: 'g',
+  8: 'h',
+  9: 'i',
+  10: 'j',
+  11: 'k',
+  12: 'l',
+  13: 'm',
+  14: 'n',
+  15: 'o',
+  16: 'p',
+  17: 'q',
+  18: 'r',
+  19: 's',
+  20: 't',
+  21: 'u',
+  22: 'v',
+  23: 'w',
+  24: 'x',
+  25: 'y',
+  26: 'z'
+}
+
+const characterNumber = {
+  1: '0',
+  2: '1',
+  3: '2',
+  4: '3',
+  5: '4',
+  6: '5',
+  7: '6',
+  8: '7',
+  9: '8',
+  10: '9'
+}
+
+const characterSpecial = {
+  1: "\u0020",
+  2: '\u0021',
+  3: '\u0022',
+  4: '\u0023',
+  5: '\u0024',
+  6: '\u0025',
+  7: "\u0026",
+  8: '\u0027',
+  9: '\u0028',
+  10: '\u0029',
+  11: '\u002A',
+  12: '\u002B',
+  13: '\u002C',
+  14: '\u002D',
+  15: '\u002E',
+  16: '\u002F',
+  17: '\u003A',
+  18: '\u003B',
+  19: '\u003C',
+  20: '\u003D',
+  21: '\u003E',
+  22: '\u003F',
+  23: '\u0040',
+  24: '\u005B',
+  25: '\u005C',
+  26: '\u005D',
+  27: '\u005E',
+  28: '\u005F',
+  29: '\u0060',
+  30: '\u007B',
+  31: '\u007C',
+  32: '\u007D',
+  33: '\u007E'
+}
+
+// Defining the variables for the user password parameters.
 let selectUpper = true;
 let selectLower = true;
 let selectNumber = true;
 let selectSpecial = true;
 let passwordLength = 12;
 
-// Write password to the #password input
+// Building an array that allows for the randomization process. It allows for a character set to be randomly selected.
+let chooseCharacter = [];
+console.log(chooseCharacter.length);
+function buildCharacterArray() {
+  if (selectUpper === true) {
+    chooseCharacter.push(characterUpper);
+  }
+  if (selectLower === true) {
+    chooseCharacter.push(characterLower);
+  }
+  if (selectNumber === true) {
+    chooseCharacter.push(characterNumber);
+  }
+  if (selectSpecial === true) {
+    chooseCharacter.push(characterSpecial);
+  }
+}
+
+// Function for generating/writing the password.
 function writePassword() {
-  //var password = generatePassword() 
-     //var passwordText = document.querySelector("#password");
-  document.getElementById("password").innerHTML = "Your password is: " + (1 + (Math.floor(Math.random() * 26)));
+  // Validating user's parameters.
   if (selectUpper === true || selectLower === true || selectNumber === true || selectSpecial === true) {
     console.log("characters approved");
     let approval1 = true;
@@ -52,11 +147,31 @@ function writePassword() {
   }else {
     console.log("password criteria rejected");
   }
+  // Running the character array builder based on user inputs.
+  buildCharacterArray();
+  // Defining the password variable outside of the iteration to keep changes made to it.
+  let password = "";
+  // Iterating the password generation based on the password length specified by the user.
+  let i;
+  for (i=0; i < passwordLength; i++) {
+    // This randomly assigns a character set from which to select the ith character.
+    let randomCharacterSet = (chooseCharacter[(Math.floor(Math.random() * chooseCharacter.length))]);
+    // This creates a multiplier variable based on the randomly selected character set. This will be used when randomizing on each iteration.
+    if (randomCharacterSet === characterUpper || randomCharacterSet === characterLower) {
+      setMultiplier = 26;
+    } else if (randomCharacterSet === characterNumber) {
+      setMultiplier = 10;
+    } else if (randomCharacterSet === characterSpecial) {
+      setMultiplier = 33;
+    } else {
+      console.log("error");
+    }
+    // Writing to the password variable. The iterative process selects and writes a random character from a random character set each time through.
+    password += randomCharacterSet[(1 + (Math.floor(Math.random() * setMultiplier)))];
   }
-//passwordText.value = password;
-
-
-
-// Add event listener to generate button
+  // Printing generated password to user's display.
+  document.getElementById("password").innerHTML = "Your password is: " + password;
+  console.log(password);
+}
 generateBtn.addEventListener("click", writePassword);
 

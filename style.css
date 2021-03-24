@@ -4,17 +4,25 @@
   box-sizing: border-box;
 }
 
+:root {
+  --dark: #2b061e;
+  --mid: #697a21;
+  --light: #f2f3d9;
+  --accent: #db2763;
+}
+
 html,
 body,
 .wrapper {
   height: 100%;
   margin: 0;
   padding: 0;
+  color: var(--light);
 }
 
 body {
   font-family: sans-serif;
-  background-color: #f9fbfd;
+  background-color: var(--dark);
 }
 
 .wrapper {
@@ -27,15 +35,13 @@ header {
   text-align: center;
   padding: 20px;
   padding-top: 0px;
-  color: hsl(206, 17%, 28%);
 }
 
 .card {
-  background-color: hsl(0, 0%, 100%);
+  background-color: var(--light);
   border-radius: 5px;
   border-width: 1px;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px 0px;
-  color: hsl(206, 17%, 28%);
+  color: var(--mid);
   font-size: 18px;
   margin: 0 auto;
   max-width: 800px;
@@ -46,7 +52,7 @@ header {
   content: " ";
   display: block;
   width: 100%;
-  background: #e7e9eb;
+  background: var(--mid);
   height: 2px;
 }
 
@@ -62,7 +68,7 @@ header {
   content: " ";
   display: block;
   width: 100%;
-  background: #e7e9eb;
+  background: var(--mid);
   height: 2px;
 }
 
@@ -74,7 +80,7 @@ header {
 
 .btn {
   border: none;
-  background-color: hsl(360, 91%, 36%);
+  background-color: var(--accent);
   border-radius: 25px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 6px 0px rgba(0, 0, 0, 0.2) 0px 1px 1px
     0px;
