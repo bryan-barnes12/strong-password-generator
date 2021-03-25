@@ -173,5 +173,16 @@ function writePassword() {
   document.getElementById("password").innerHTML = "Your password is: " + password;
   console.log(password);
 }
+
+// function gatherParameters() {
+//   selectUpper = document.getElementById("userUpper").value;
+//   selectLower = document.getElementById("userLower").value;
+//   selectNumber = document.getElementById("userNumber").value;
+//   selectSpecial = document.getElementById("userSpecial").value;
+//   passwordLength = document.getElementById("userLength").value;
+//   writePassword();
+// }
+
+
 generateBtn.addEventListener("click", writePassword);
 
