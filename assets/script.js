@@ -108,81 +108,96 @@ const characterSpecial = {
   33: '\u007E'
 }
 
-// Defining the variables for the user password parameters.
-let selectUpper = true;
-let selectLower = true;
-let selectNumber = true;
-let selectSpecial = true;
-let passwordLength = 12;
+let selectUpper = false;
+let selectLower = false;
+let selectNumber = false;
+let selectSpecial = false;
 
 // Building an array that allows for the randomization process. It allows for a character set to be randomly selected.
 let chooseCharacter = [];
-console.log(chooseCharacter.length);
 function buildCharacterArray() {
-  if (selectUpper === true) {
+  if (selectUpper) {
     chooseCharacter.push(characterUpper);
   }
-  if (selectLower === true) {
+  if (selectLower) {
     chooseCharacter.push(characterLower);
   }
-  if (selectNumber === true) {
+  if (selectNumber) {
     chooseCharacter.push(characterNumber);
   }
-  if (selectSpecial === true) {
+  if (selectSpecial) {
     chooseCharacter.push(characterSpecial);
   }
 }
 
-// Function for generating/writing the password.
+let password = "";
+
+
+// Function for writing the password.
 function writePassword() {
-  // Validating user's parameters.
+  let passwordLength = prompt("Enter desired password length (8-128 characters).");
+  if ((8 <= passwordLength) && (passwordLength <= 128)) {
+    selectUpper = confirm("Include upper case?");
+    selectLower = confirm("Include lower case?");
+    selectNumber = confirm("Include numbers?");
+    selectSpecial = confirm("Include special characters?");
+    buildCharacterArray();
+  } else {
+    alert("Please select a valid password length.")
+  }
   if (selectUpper === true || selectLower === true || selectNumber === true || selectSpecial === true) {
     console.log("characters approved");
-    let approval1 = true;
-    if (approval1 === true && (8 <= passwordLength) && (passwordLength <= 128)) {
-      console.log("length approved");
-    }else {
-      console.log("length rejected");
+    // let approval1 = true;
+    // if (approval1 === true && (8 <= passwordLength) && (passwordLength <= 128)) {
+    //   console.log("length approved");
+    // }else {
+    //   console.log("length rejected");
+    // }
+    let i;
+    for (i=0; i < passwordLength; i++) {
+      // This randomly assigns a character set from which to select the ith character.
+      let randomCharacterSet = (chooseCharacter[(Math.floor(Math.random() * chooseCharacter.length))]);
+      // This creates a multiplier variable based on the randomly selected character set. This will be used when randomizing on each iteration.
+      let setMultiplier = "";
+      if (randomCharacterSet === characterUpper || randomCharacterSet === characterLower) {
+        setMultiplier = 26;
+      } else if (randomCharacterSet === characterNumber) {
+        setMultiplier = 10;
+      } else if (randomCharacterSet === characterSpecial) {
+        setMultiplier = 33;
+      } else {
+        console.log("error");
+      }
+      // Writing to the password variable. The iterative process selects and writes a random character from a random character set each time through.
+      password += randomCharacterSet[(1 + (Math.floor(Math.random() * setMultiplier)))];
     }
-  }else {
+    }else {
     console.log("password criteria rejected");
   }
-  // Running the character array builder based on user inputs.
-  buildCharacterArray();
   // Defining the password variable outside of the iteration to keep changes made to it.
-  let password = "";
   // Iterating the password generation based on the password length specified by the user.
-  let i;
-  for (i=0; i < passwordLength; i++) {
-    // This randomly assigns a character set from which to select the ith character.
-    let randomCharacterSet = (chooseCharacter[(Math.floor(Math.random() * chooseCharacter.length))]);
-    // This creates a multiplier variable based on the randomly selected character set. This will be used when randomizing on each iteration.
-    if (randomCharacterSet === characterUpper || randomCharacterSet === characterLower) {
-      setMultiplier = 26;
-    } else if (randomCharacterSet === characterNumber) {
-      setMultiplier = 10;
-    } else if (randomCharacterSet === characterSpecial) {
-      setMultiplier = 33;
-    } else {
-      console.log("error");
-    }
-    // Writing to the password variable. The iterative process selects and writes a random character from a random character set each time through.
-    password += randomCharacterSet[(1 + (Math.floor(Math.random() * setMultiplier)))];
-  }
+  // let i;
+  // for (i=0; i < passwordLength; i++) {
+  //   // This randomly assigns a character set from which to select the ith character.
+  //   let randomCharacterSet = (chooseCharacter[(Math.floor(Math.random() * chooseCharacter.length))]);
+  //   // This creates a multiplier variable based on the randomly selected character set. This will be used when randomizing on each iteration.
+  //   let setMultiplier = "";
+  //   if (randomCharacterSet === characterUpper || randomCharacterSet === characterLower) {
+  //     setMultiplier = 26;
+  //   } else if (randomCharacterSet === characterNumber) {
+  //     setMultiplier = 10;
+  //   } else if (randomCharacterSet === characterSpecial) {
+  //     setMultiplier = 33;
+  //   } else {
+  //     console.log("error");
+  //   }
+  //   // Writing to the password variable. The iterative process selects and writes a random character from a random character set each time through.
+  //   password += randomCharacterSet[(1 + (Math.floor(Math.random() * setMultiplier)))];
+  // }
   // Printing generated password to user's display.
   document.getElementById("password").innerHTML = "Your password is: " + password;
-  console.log(password);
+  chooseCharacter = [];
+  password = "";
 }
-
-// function gatherParameters() {
-//   selectUpper = document.getElementById("userUpper").value;
-//   selectLower = document.getElementById("userLower").value;
-//   selectNumber = document.getElementById("userNumber").value;
-//   selectSpecial = document.getElementById("userSpecial").value;
-//   passwordLength = document.getElementById("userLength").value;
-//   writePassword();
-// }
-
-
 generateBtn.addEventListener("click", writePassword);
 
