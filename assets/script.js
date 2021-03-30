@@ -129,22 +129,27 @@ function buildCharacterArray() {
     chooseCharacter.push(characterSpecial);
   }
 }
-
+  // Defining the password variable outside of the iteration to keep changes made to it.
 let password = "";
-
 
 // Function for writing the password.
 function writePassword() {
+  // Collecting desired length from the user. If character length is acceptable they will be allowed through to character selection.
   passwordLength = prompt("Enter desired password length (8-128 characters).");
+  // Confirming password length.
   if ((8 <= passwordLength) && (passwordLength <= 128)) {
+    // Collecting desired character types to include.
     selectUpper = confirm("Include upper case?");
     selectLower = confirm("Include lower case?");
     selectNumber = confirm("Include numbers?");
     selectSpecial = confirm("Include special characters?");
+    // Calling build character array function (see above).
     buildCharacterArray();
+    // Validating character selection.
     if (selectUpper === true || selectLower === true || selectNumber === true || selectSpecial === true) {
       console.log("characters approved");
       let i;
+      // Iterating the password generation based on the password length specified by the user.
       for (i=0; i < passwordLength; i++) {
         // This randomly assigns a character set from which to select the ith character.
         let randomCharacterSet = (chooseCharacter[(Math.floor(Math.random() * chooseCharacter.length))]);
@@ -164,56 +169,15 @@ function writePassword() {
       }
       }else {
       console.log("password criteria rejected");
+      alert("You must select characters for the password.");
     }
     } else {
       alert("Please select a valid password length.");
       console.log("Please select a valid password length.");
     }
-  // if (selectUpper === true || selectLower === true || selectNumber === true || selectSpecial === true) {
-  //   console.log("characters approved");
-  //   let i;
-  //   for (i=0; i < passwordLength; i++) {
-  //     // This randomly assigns a character set from which to select the ith character.
-  //     let randomCharacterSet = (chooseCharacter[(Math.floor(Math.random() * chooseCharacter.length))]);
-  //     // This creates a multiplier variable based on the randomly selected character set. This will be used when randomizing on each iteration.
-  //     let setMultiplier = "";
-  //     if (randomCharacterSet === characterUpper || randomCharacterSet === characterLower) {
-  //       setMultiplier = 26;
-  //     } else if (randomCharacterSet === characterNumber) {
-  //       setMultiplier = 10;
-  //     } else if (randomCharacterSet === characterSpecial) {
-  //       setMultiplier = 33;
-  //     } else {
-  //       console.log("error");
-  //     }
-  //     // Writing to the password variable. The iterative process selects and writes a random character from a random character set each time through.
-  //     password += randomCharacterSet[(1 + (Math.floor(Math.random() * setMultiplier)))];
-  //   }
-  //   }else {
-  //   console.log("password criteria rejected");
-  // }
-  // Defining the password variable outside of the iteration to keep changes made to it.
-  // Iterating the password generation based on the password length specified by the user.
-  // let i;
-  // for (i=0; i < passwordLength; i++) {
-  //   // This randomly assigns a character set from which to select the ith character.
-  //   let randomCharacterSet = (chooseCharacter[(Math.floor(Math.random() * chooseCharacter.length))]);
-  //   // This creates a multiplier variable based on the randomly selected character set. This will be used when randomizing on each iteration.
-  //   let setMultiplier = "";
-  //   if (randomCharacterSet === characterUpper || randomCharacterSet === characterLower) {
-  //     setMultiplier = 26;
-  //   } else if (randomCharacterSet === characterNumber) {
-  //     setMultiplier = 10;
-  //   } else if (randomCharacterSet === characterSpecial) {
-  //     setMultiplier = 33;
-  //   } else {
-  //     console.log("error");
-  //   }
-  //   // Writing to the password variable. The iterative process selects and writes a random character from a random character set each time through.
-  //   password += randomCharacterSet[(1 + (Math.floor(Math.random() * setMultiplier)))];
-  // }
   // Printing generated password to user's display.
   document.getElementById("password").innerHTML = "Your password is: " + password;
+  // Resetting the variables to be used in creating another password.
   chooseCharacter = [];
   password = "";
 }
