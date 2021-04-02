@@ -1,6 +1,7 @@
 // Creates the button variable to be used in the click listener.
 var generateBtn = document.querySelector("#generate");
 // Defining character objects. These objects contain all of the possible characters from which will choose our randomly generated password.
+// I considered using arrays for this, but wanted practice with objects.
 const characterUpper = {
   1: 'A',
   2: 'B',
@@ -107,6 +108,7 @@ const characterSpecial = {
   32: '\u007D',
   33: '\u007E'
 }
+//Setting the values to false so a password won't be written in the fail case.
 let passwordLength = 12;
 let selectUpper = false;
 let selectLower = false;
